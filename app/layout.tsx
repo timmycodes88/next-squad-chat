@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { cn } from '@/lib/utils'
+import ToastProvider from '@/components/providers/ToastProvider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             enableSystem
             storageKey='squad-chat-theme'
           >
+            <ToastProvider />
             {children}
           </ThemeProvider>
         </body>
