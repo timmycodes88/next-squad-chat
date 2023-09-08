@@ -216,3 +216,59 @@ export async function createChannel({
     return { error: err.message || 'Error creating channel' }
   }
 }
+
+export async function leaveServer(serverId: string) {
+  try {
+    const profile = await currentProfile()
+
+    if (!profile) return { error: 'You must be logged in to leave a server' }
+    if (!serverId) return { error: 'Server ID is required' }
+
+    await db.server.update({
+      where: {
+        id: serverId,
+        profileId: {
+          not: profile.id,
+        },
+        members: {
+          some: {
+            profileId: profile.id,
+          },
+        },
+      },
+      data: {
+        members: {
+          deleteMany: {
+            profileId: profile.id,
+          },
+        },
+      },
+    })
+
+    return {}
+  } catch (err: any) {
+    console.error('[LEAVE SERVER ERROR]: ', err)
+    return { error: err.message || 'Error leaving server' }
+  }
+}
+
+export async function deleteServer(serverId: string) {
+  try {
+    const profile = await currentProfile()
+
+    if (!profile) return { error: 'You must be logged in to leave a server' }
+    if (!serverId) return { error: 'Server ID is required' }
+
+    await db.server.delete({
+      where: {
+        id: serverId,
+        profileId: profile.id,
+      },
+    })
+
+    return {}
+  } catch (err: any) {
+    console.error('[DELETE SERVER ERROR]: ', err)
+    return { error: err.message || 'Error leaving server' }
+  }
+}

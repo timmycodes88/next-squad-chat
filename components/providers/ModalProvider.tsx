@@ -7,6 +7,7 @@ import EditServerModal from '../modals/EditServerModal'
 import ManageMembersModal from '../modals/ManageMembersModal'
 import CreateChannelModal from '../modals/CreateChannelModal'
 import LeaverServerModal from '../modals/LeaveServerModal'
+import DeleteServerModal from '../modals/DeleteServerModal'
 
 export default function ModalProvider() {
   if (useHydrate())
@@ -17,6 +18,7 @@ export default function ModalProvider() {
         <ManageMembersModal />
         <CreateChannelModal />
         <LeaverServerModal />
+        <DeleteServerModal />
         <InviteModal />
       </>
     )

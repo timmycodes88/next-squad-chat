@@ -135,7 +135,7 @@ export default function ManageMembersModal() {
                                 }
                               >
                                 <ShieldCheck className='w-4 h-4 mr-2' />
-                                Guest
+                                Mod
                                 {member.role === 'MODERATOR' && (
                                   <Check className='w-4 h-4 ml-auto' />
                                 )}

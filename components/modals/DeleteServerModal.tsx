@@ -14,20 +14,20 @@ import {
 import { useModal } from '@/hooks/useModalStore'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { leaveServer } from '@/lib/actions.ts/server.actions'
+import { deleteServer } from '@/lib/actions.ts/server.actions'
 
-export default function LeaverServerModal() {
+export default function DeleteServerModal() {
   const router = useRouter()
   const { isOpen, close, type, data } = useModal()
   const server = data.server
-  const isModalOpen = isOpen && type === 'leaveServer'
+  const isModalOpen = isOpen && type === 'deleteServer'
 
   const [isLoading, setIsLoading] = useState(false)
 
   const onConfirm = async () => {
     if (!server) return toast.error('Server not found')
     setIsLoading(true)
-    const { error } = await leaveServer(server.id)
+    const { error } = await deleteServer(server.id)
     setIsLoading(false)
     if (error) return toast.error(error)
     close()
@@ -42,14 +42,14 @@ export default function LeaverServerModal() {
       <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
-            Leave Server
+            Delete Server
           </DialogTitle>
           <DialogDescription className='text-center text-zinc-500'>
-            Are you sure you want to leave this server{' '}
+            Are you sure you want to do this? <br />
             <span className='font-semibold text-indigo-500'>
               {server?.name}
-            </span>
-            ?
+            </span>{' '}
+            will be deleted forever.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className='bg-gray-100 px-6 py-4'>
