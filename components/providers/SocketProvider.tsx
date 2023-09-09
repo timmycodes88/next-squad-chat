@@ -41,7 +41,7 @@ export default function SocketProvider({
     })
 
     setSocket(socketInstance)
-    setTimeout(() => setIsConnected(knowConnectionRef.current), 100)
+    setTimeout(() => setIsConnected(knowConnectionRef.current), 500)
 
     return () => {
       socketInstance.disconnect()
