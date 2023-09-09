@@ -21,7 +21,11 @@ import {
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { useParams, useRouter } from 'next/navigation'
-import { createChannel, createServer } from '@/lib/actions.ts/server.actions'
+import {
+  createChannel,
+  createServer,
+  editChannel,
+} from '@/lib/actions.ts/server.actions'
 import { toast } from 'react-hot-toast'
 import { useModal } from '@/hooks/useModalStore'
 import { ChannelType } from '@prisma/client'
@@ -43,11 +47,11 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType),
 })
 
-export default function CreateChannelModal() {
+export default function EditChannelModal() {
   const { isOpen, close, type, data } = useModal()
-  const channelType = data?.channelType || ChannelType.TEXT
+  const { server, channel } = data
 
-  const isModalOpen = isOpen && type === 'createChannel'
+  const isModalOpen = isOpen && type === 'editChannel'
 
   const router = useRouter()
   const params = useParams()
@@ -56,20 +60,25 @@ export default function CreateChannelModal() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: channelType,
+      type: channel?.type || ChannelType.TEXT,
     },
   })
 
   useEffect(() => {
-    form.setValue('type', channelType)
-  }, [channelType, form])
+    if (channel) {
+      form.setValue('name', channel.name)
+      form.setValue('type', channel.type)
+    }
+  }, [form, channel])
 
   const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { error } = await createChannel({
+    if (!server || !channel) return toast.error('Server/Channel not found')
+    const { error } = await editChannel({
       ...values,
-      serverId: params.serverId as string,
+      serverId: server?.id,
+      channelId: channel?.id,
     })
     if (error) return toast.error(error)
     form.reset()
@@ -87,7 +96,7 @@ export default function CreateChannelModal() {
       <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -148,7 +157,7 @@ export default function CreateChannelModal() {
             </div>
             <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button disabled={isLoading} variant={'primary'}>
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>

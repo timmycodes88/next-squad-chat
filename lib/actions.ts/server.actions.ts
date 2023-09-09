@@ -272,3 +272,97 @@ export async function deleteServer(serverId: string) {
     return { error: err.message || 'Error leaving server' }
   }
 }
+
+export async function deleteChannel(serverId: string, channelId: string) {
+  try {
+    const profile = await currentProfile()
+
+    if (!profile) return { error: 'You must be logged in to leave a server' }
+    if (!serverId) return { error: 'Server ID is required' }
+    if (!channelId) return { error: 'Channel ID is required' }
+
+    await db.server.update({
+      where: {
+        id: serverId,
+        members: {
+          some: {
+            profileId: profile.id,
+            role: {
+              in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+            },
+          },
+        },
+      },
+      data: {
+        channels: {
+          delete: {
+            id: channelId,
+            name: {
+              not: 'general',
+            },
+          },
+        },
+      },
+    })
+
+    return {}
+  } catch (err: any) {
+    console.error('[DELETE CHANNEL ERROR]: ', err)
+    return { error: err.message || 'Error deleting channel' }
+  }
+}
+
+export async function editChannel({
+  serverId,
+  channelId,
+  name,
+  type,
+}: CreateChannelPayload & {
+  channelId: string
+}) {
+  try {
+    const profile = await currentProfile()
+
+    if (!profile) return { error: 'You must be logged in to edit a channel' }
+    if (name === 'general') return { error: 'Channel name is reserved' }
+    if (!serverId) return { error: 'Server ID is required' }
+    if (!channelId) return { error: 'Channel ID is required' }
+    if (!name) return { error: 'Channel name is required' }
+    if (!type) return { error: 'Channel type is required' }
+
+    await db.server.update({
+      where: {
+        id: serverId,
+        members: {
+          some: {
+            profileId: profile.id,
+            role: {
+              in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+            },
+          },
+        },
+      },
+      data: {
+        channels: {
+          update: {
+            where: {
+              id: channelId,
+              NOT: {
+                name: 'general',
+              },
+            },
+            data: {
+              name,
+              type,
+            },
+          },
+        },
+      },
+    })
+
+    return {}
+  } catch (err: any) {
+    console.error('[EDIT CHANNEL ERROR]: ', err)
+    return { error: err.message || 'Error editing channel' }
+  }
+}
