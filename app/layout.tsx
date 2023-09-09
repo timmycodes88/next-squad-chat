@@ -14,6 +14,15 @@ const font = Open_Sans({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Squad Chat',
   description: 'Squad Chat by BrightSideDeveloper',
+  manifest: '/manifest.json',
+  themeColor: '#303338',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Squad Chat',
+  },
+  viewport:
+    'width=device-width, height=device-height, initial-scale:1, user-scalable=no',
 }
 
 export default function RootLayout({
