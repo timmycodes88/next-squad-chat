@@ -33,7 +33,7 @@ export default async function page({
   if (!channel || !member) return redirect('/')
 
   return (
-    <div className='bg-white dark:bg-[#313338] flex flex-col h-full'>
+    <div className='bg-white dark:bg-[#313338] flex flex-col h-full relative'>
       <ChatHeader
         name={channel.name}
         serverId={channel.serverId}
