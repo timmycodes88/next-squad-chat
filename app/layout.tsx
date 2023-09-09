@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { cn } from '@/lib/utils'
 import ToastProvider from '@/components/providers/ToastProvider'
 import ModalProvider from '@/components/providers/ModalProvider'
+import SocketProvider from '@/components/providers/SocketProvider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -29,9 +30,11 @@ export default function RootLayout({
             enableSystem
             storageKey='squad-chat-theme'
           >
-            <ModalProvider />
-            <ToastProvider />
-            {children}
+            <SocketProvider>
+              <ModalProvider />
+              <ToastProvider />
+              {children}
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
