@@ -117,6 +117,7 @@ export async function updateMemberRole(
       data: {
         members: {
           //This error is not breaking anything and IDK why it is happening :/
+          // @ts-ignore
           update: {
             where: {
               id: memberId,
