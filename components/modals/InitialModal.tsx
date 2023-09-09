@@ -29,7 +29,7 @@ import { toast } from 'react-hot-toast'
 
 const formSchema = z.object({
   name: z.string().min(2, 'Server name is required').max(32),
-  imageUrl: z.string().min(2, 'Server name is required'),
+  imageUrl: z.string().min(2, 'Please upload an image'),
 })
 
 export default function InitialModal() {

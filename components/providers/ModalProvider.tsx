@@ -10,6 +10,7 @@ import LeaverServerModal from '../modals/LeaveServerModal'
 import DeleteServerModal from '../modals/DeleteServerModal'
 import DeleteChannelModal from '../modals/DeleteChannelModal'
 import EditChannelModal from '../modals/EditChannelModal'
+import MessageFileModal from '../modals/MessageFileModal'
 
 export default function ModalProvider() {
   if (useHydrate())
@@ -23,6 +24,7 @@ export default function ModalProvider() {
         <DeleteServerModal />
         <DeleteChannelModal />
         <EditChannelModal />
+        <MessageFileModal />
         <InviteModal />
       </>
     )
