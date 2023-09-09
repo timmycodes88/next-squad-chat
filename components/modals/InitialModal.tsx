@@ -60,13 +60,65 @@ export default function InitialModal() {
         <DialogContent className='bg-white text-black p-0 overflow-hidden'>
           <DialogHeader className='pt-8 px-6'>
             <DialogTitle className='text-2xl text-center font-bold'>
-              Work in Progress...
+              Customize your server
             </DialogTitle>
-            <DialogDescription className='pb-8'>
-              If you are seeing this, please click the link given to you by Tim
-              again.
+            <DialogDescription>
+              Give your server a personality with a name and image. You can
+              always change it later!
             </DialogDescription>
           </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+              <div className='space-y-8 px-6'>
+                <div className='flex items-center justify-center text-center'>
+                  <FormField
+                    control={form.control}
+                    name='imageUrl'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <FileUpload
+                            endpoint='serverImage'
+                            value={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name='name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'>
+                        Server name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          placeholder='Enter a server name'
+                          className='bg-zinc-300/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-black'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <DialogFooter className='bg-gray-100 px-6 py-4'>
+                <Button disabled={isLoading} variant={'primary'}>
+                  {isLoading ? (
+                    <Loader2 className='w-4 h-4 animate-spin' />
+                  ) : (
+                    'Create'
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     )
