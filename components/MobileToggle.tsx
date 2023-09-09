@@ -13,7 +13,7 @@ export default function MobileToggle({ serverId }: { serverId: string }) {
         </Button>
       </SheetTrigger>
       <SheetContent className='p-0 flex gap-0' side={'left'}>
-        <div className='w-[72px]'>
+        <div className='w-[20px] hidden'>
           <NavigationSideBar />
         </div>
         <ServerSidebar serverId={serverId} />

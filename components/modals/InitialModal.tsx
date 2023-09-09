@@ -60,6 +60,23 @@ export default function InitialModal() {
         <DialogContent className='bg-white text-black p-0 overflow-hidden'>
           <DialogHeader className='pt-8 px-6'>
             <DialogTitle className='text-2xl text-center font-bold'>
+              Work in Progress...
+            </DialogTitle>
+            <DialogDescription className='pb-8'>
+              If you are seeing this, please click the link given to you by Tim
+              again.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    )
+
+  if (false)
+    return (
+      <Dialog open>
+        <DialogContent className='bg-white text-black p-0 overflow-hidden'>
+          <DialogHeader className='pt-8 px-6'>
+            <DialogTitle className='text-2xl text-center font-bold'>
               Customize your server
             </DialogTitle>
             <DialogDescription>
