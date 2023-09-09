@@ -13,27 +13,32 @@ import {
 
 import { useModal } from '@/hooks/useModalStore'
 import { toast } from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import { deleteServer } from '@/lib/actions.ts/server.actions'
 import { Loader2 } from 'lucide-react'
+import qs from 'query-string'
+import axios from 'axios'
 
-export default function DeleteServerModal() {
-  const router = useRouter()
+export default function DeleteMessageModal() {
   const { isOpen, close, type, data } = useModal()
-  const server = data.server
-  const isModalOpen = isOpen && type === 'deleteServer'
+  const { apiUrl, query } = data
+  const isModalOpen = isOpen && type === 'deleteMessage'
 
   const [isLoading, setIsLoading] = useState(false)
 
   const onConfirm = async () => {
-    if (!server) return toast.error('Server not found')
-    setIsLoading(true)
-    const { error } = await deleteServer(server.id)
-    setIsLoading(false)
-    if (error) return toast.error(error)
-    close()
-    router.refresh()
-    router.push('/')
+    if (!apiUrl || !query) return toast.error('Message not found')
+    try {
+      setIsLoading(true)
+      const url = qs.stringifyUrl({
+        url: apiUrl,
+        query,
+      })
+      await axios.delete(url)
+      close()
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleClose = () => close()
@@ -43,14 +48,10 @@ export default function DeleteServerModal() {
       <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
-            Delete Server
+            Delete Message
           </DialogTitle>
           <DialogDescription className='text-center text-zinc-500'>
-            Are you sure you want to do this? <br />
-            <span className='font-semibold text-indigo-500'>
-              {server?.name}
-            </span>{' '}
-            will be deleted forever.
+            Are you sure you want to do this?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className='bg-gray-100 px-6 py-4'>

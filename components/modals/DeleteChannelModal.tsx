@@ -14,7 +14,8 @@ import {
 import { useModal } from '@/hooks/useModalStore'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { deleteChannel, deleteServer } from '@/lib/actions.ts/server.actions'
+import { deleteChannel } from '@/lib/actions.ts/server.actions'
+import { Loader2 } from 'lucide-react'
 
 export default function DeleteChannelModal() {
   const router = useRouter()
@@ -66,7 +67,11 @@ export default function DeleteChannelModal() {
               onClick={onConfirm}
               variant={'destructive'}
             >
-              Confirm
+              {isLoading ? (
+                <Loader2 className='w-4 h-4 animate-spin' />
+              ) : (
+                'Confirm'
+              )}
             </Button>
           </div>
         </DialogFooter>

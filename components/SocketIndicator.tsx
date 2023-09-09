@@ -18,7 +18,7 @@ export default function SocketIndicator() {
         isConnected ? 'bg-emerald-600' : 'bg-yellow-600'
       )}
     >
-      {isConnected ? 'Live' : 'Fallback: Retrying every 5s'}
+      {isConnected ? 'Live' : 'Updating every 2s'}
     </Badge>
   )
 }

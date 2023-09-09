@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation'
 import { createServer } from '@/lib/actions.ts/server.actions'
 import { toast } from 'react-hot-toast'
 import { useModal } from '@/hooks/useModalStore'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
   name: z.string().min(2, 'Server name is required').max(32),
@@ -117,7 +118,11 @@ export default function CreateServerModal() {
             </div>
             <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button disabled={isLoading} variant={'primary'}>
-                Create
+                {isLoading ? (
+                  <Loader2 className='w-4 h-4 animate-spin' />
+                ) : (
+                  'Create'
+                )}
               </Button>
             </DialogFooter>
           </form>

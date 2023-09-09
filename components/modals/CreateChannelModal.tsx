@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from '../ui/select'
 import { useEffect } from 'react'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
   name: z
@@ -67,6 +68,7 @@ export default function CreateChannelModal() {
   const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!params?.serverId) return toast.error('Server not found')
     const { error } = await createChannel({
       ...values,
       serverId: params.serverId as string,
@@ -148,7 +150,11 @@ export default function CreateChannelModal() {
             </div>
             <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button disabled={isLoading} variant={'primary'}>
-                Create
+                {isLoading ? (
+                  <Loader2 className='w-4 h-4 animate-spin' />
+                ) : (
+                  'Create'
+                )}
               </Button>
             </DialogFooter>
           </form>

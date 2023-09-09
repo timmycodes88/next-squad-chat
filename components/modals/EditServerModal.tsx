@@ -27,6 +27,7 @@ import { createServer, updateServer } from '@/lib/actions.ts/server.actions'
 import { toast } from 'react-hot-toast'
 import { useModal } from '@/hooks/useModalStore'
 import { useEffect } from 'react'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
   name: z.string().min(2, 'Server name is required').max(32),
@@ -126,7 +127,11 @@ export default function EditServerModal() {
             </div>
             <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button disabled={isLoading} variant={'primary'}>
-                Save
+                {isLoading ? (
+                  <Loader2 className='w-4 h-4 animate-spin' />
+                ) : (
+                  'Save'
+                )}
               </Button>
             </DialogFooter>
           </form>

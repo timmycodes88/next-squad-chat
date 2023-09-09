@@ -20,6 +20,7 @@ import { createServer } from '@/lib/actions.ts/server.actions'
 import { toast } from 'react-hot-toast'
 import { useModal } from '@/hooks/useModalStore'
 import axios from 'axios'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
   fileUrl: z.string().min(2, 'Please upload an image.'),
@@ -93,7 +94,11 @@ export default function MessageFileModal() {
             </div>
             <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button disabled={isLoading} variant={'primary'}>
-                Send
+                {isLoading ? (
+                  <Loader2 className='w-4 h-4 animate-spin' />
+                ) : (
+                  'Send'
+                )}
               </Button>
             </DialogFooter>
           </form>
