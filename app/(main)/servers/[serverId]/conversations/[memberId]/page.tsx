@@ -1,4 +1,6 @@
 import ChatHeader from '@/components/chat/ChatHeader'
+import ChatInput from '@/components/chat/ChatInput'
+import ChatMessages from '@/components/chat/ChatMessages'
 import { getConversation } from '@/lib/conversation'
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
@@ -43,6 +45,25 @@ export default async function page({
         serverId={serverId}
         type='conversation'
         imageUrl={otherMember.profile.imageUrl}
+      />
+      <ChatMessages
+        member={currMember}
+        name={otherMember.profile.name}
+        type={'conversation'}
+        apiUrl='/api/direct-messages'
+        chatId={conversation.id}
+        paramKey='conversationId'
+        paramValue={conversation.id}
+        socketUrl='/api/socket/direct-messages'
+        socketQuery={{
+          conversationId: conversation.id,
+        }}
+      />
+      <ChatInput
+        name={otherMember.profile.name}
+        type='conversation'
+        apiUrl='/api/socket/direct-messages'
+        query={{ conversationId: conversation.id }}
       />
     </div>
   )

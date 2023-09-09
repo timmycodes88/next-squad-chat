@@ -77,7 +77,7 @@ export default function ChatMessages({
   if (status === 'error')
     return (
       <div className='flex flex-col flex-1 justify-center items-center'>
-        <ServerCrash className='h-20 w-20 text-zinc-500' />
+        <ServerCrash className='h-10 w-10 text-zinc-500' />
         <p className='text-sm pt-2 text-zinc-500 dark:text-zinc-400'>
           Something went wrong!
         </p>
