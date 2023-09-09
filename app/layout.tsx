@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description: 'Squad Chat by BrightSideDeveloper',
   manifest: '/manifest.json',
   themeColor: '#303338',
+  icons: {
+    apple: '/apple-touch-icon.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
