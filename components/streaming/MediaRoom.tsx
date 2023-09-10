@@ -17,9 +17,9 @@ export default function MediaRoom({ chatId, video, audio }: MediaRoomProps) {
   const [token, setToken] = useState('')
 
   useEffect(() => {
-    if (!user?.firstName || !user?.lastName) return
-
-    const name = `${user.firstName} ${user.lastName}`
+    let name = 'Anonymous'
+    if (user?.firstName && user?.lastName)
+      name = `${user.firstName} ${user.lastName}`
     ;(async () => {
       try {
         const res = await fetch(`/api/livekit?room=${chatId}&username=${name}`)
